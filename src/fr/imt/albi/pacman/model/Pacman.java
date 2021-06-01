@@ -43,8 +43,15 @@ public class Pacman extends Creature {
 	}
 
 	public void removeLife() {
-		// TODO Méthode qui gère le retrait d'une vie à Pacman
+		this.currentLife=this.getCurrentLife()-1;
+		
+		
 	}
+		
+		// TODO Méthode qui gère le retrait d'une vie à Pacman
+
+
+	
 
 	public int getCurrentLife() {
 		return this.currentLife;
@@ -53,16 +60,24 @@ public class Pacman extends Creature {
 	public void updateScoreFood() {
 		// TODO Là, si Pacman a reçu un power-up, faut incrémenter le score comme il se
 		// doit.
+		this.currentScore=this.currentScore+Food.POWER_UP_SCORE;
+		
+		
+		
 	}
 
 	private void checkIfNewLife() {
 		// TODO Là, faut vérifier si le Pacman a atteint la limite pour avoir une vie
 		// supplémentaire :)
+		if  (this.currentScore % LIFE_POINT_THRESHOLD == 0 && this.currentLife != 0) {
+			this.currentLife=this.getCurrentLife()+1;		
+		}
 	}
 
 	public void updateScoreGhost() {
 		// TODO Là, si Pacman bouffe un fantome, faut incrémenter le score comme il faut
 		// aussi.
+		this.currentScore=this.currentScore+Ghost.GHOST_SCORE;
 	}
 
 	public int getCurrentScore() {
@@ -100,6 +115,8 @@ public class Pacman extends Creature {
 		int yMove = 0;
 
 		if (this.isMovePossible(direction)) {
+			
+			
 			/*
 			 * TODO Si le déplacement est possible, il faut : - récupérer les nouvelles
 			 * coordonnées, - voir avec quoi on risque de se percuter avec ces nouvelles
@@ -107,6 +124,9 @@ public class Pacman extends Creature {
 			 * déplacer - garder une trace du dernier déplacement effectué (y a un attribut
 			 * de classe pour ça) - Animer sa bouche ;)
 			 */
+			
+			yMove=this.getY();
+			
 		} else {
 			/*
 			 * TODO Si le déplacement n'est possible, il faut pouvoir récupérer les
@@ -205,6 +225,7 @@ public class Pacman extends Creature {
 		if (f instanceof Food) {
 			Food food = (Food) f;
 			if (food.getFood() != null) {
+				
 				/*
 				 * TODO Ici, il faut: - Changer le food en null (y a un setFood...) - Redessiner
 				 * le food (.draw()) - Et après, remettre à jour la map en updatant la bouffe
