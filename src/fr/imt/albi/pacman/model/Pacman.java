@@ -125,16 +125,26 @@ public class Pacman extends Creature {
 			 * de classe pour ça) - Animer sa bouche ;)
 			 */
 			
-			yMove=this.getY();
-			
+			int[] deplacement = this.navigateInMap(direction); //navigateInMap from Creature
+	        xMove = deplacement[0];
+	        yMove = deplacement[1];
+	        
+	        deplacement = this.checkCollision(direction, xMove, yMove);
+	        xMove = deplacement[0];
+	        yMove = deplacement[1];
+	        
+	        this.move(xMove, yMove);
+	        this.lastPosition = direction;
 		} else {
-			/*
-			 * TODO Si le déplacement n'est possible, il faut pouvoir récupérer les
-			 * coordonnées en partant du principe que sa direction sera égale à la dernière
-			 * direction qui avait marché. Quasiment la même chose, juste que ça sera pas
-			 * direction qui sera utilisé, mais autre chose :) Faut toujours animer sa
-			 * bouche ceci dit !
-			 */
+			int[] deplacement = this.navigateInMap(this.lastPosition); //navigateInMap from Creature
+	        xMove = deplacement[0];
+	        yMove = deplacement[1];
+	        
+	        deplacement = this.checkCollision(this.lastPosition, xMove, yMove);
+	        xMove = deplacement[0];
+	        yMove = deplacement[1];
+	        
+	        this.move(xMove, yMove);
 		}
 	}
 
