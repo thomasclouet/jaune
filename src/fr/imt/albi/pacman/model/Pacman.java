@@ -126,7 +126,8 @@ public class Pacman extends Creature {
 			 */
 			
 			int[] deplacement = this.navigateInMap(direction); //navigateInMap from Creature
-	        xMove = deplacement[0];
+			this.animateMouth();
+			xMove = deplacement[0];
 	        yMove = deplacement[1];
 	        
 	        deplacement = this.checkCollision(direction, xMove, yMove);
@@ -135,7 +136,9 @@ public class Pacman extends Creature {
 	        
 	        this.move(xMove, yMove);
 	        this.lastPosition = direction;
+	      
 		} else {
+			this.animateMouth();
 			int[] deplacement = this.navigateInMap(this.lastPosition); //navigateInMap from Creature
 	        xMove = deplacement[0];
 	        yMove = deplacement[1];
@@ -145,6 +148,7 @@ public class Pacman extends Creature {
 	        yMove = deplacement[1];
 	        
 	        this.move(xMove, yMove);
+	        
 		}
 	}
 
@@ -156,45 +160,45 @@ public class Pacman extends Creature {
 	 * @return true si possible, false sinon
 	 */
 	private boolean isMovePossible(String direction) {
-		boolean canMove = false;
-		Figure[][] map = this.gameMap.getMap();
+        boolean canMove = false;
+        Figure[][] map = this.gameMap.getMap();
 
-		if (this.getX() % this.gameMap.getSizeCase() == 0 && this.getY() % this.gameMap.getSizeCase() == 0) {
-			int[] position = this.getColumnAndRow();
-			int xPosition = position[0];
-			int yPosition = position[1];
+        if (this.getX() % this.gameMap.getSizeCase() == 0 && this.getY() % this.gameMap.getSizeCase() == 0) {
+            int[] position = this.getColumnAndRow();
+            int xPosition = position[0];
+            int yPosition = position[1];
 
-			Figure fUp = map[yPosition - 1][xPosition];
-			Figure fDown = map[yPosition + 1][xPosition];
-			Figure fleft = map[yPosition][xPosition - 1];
-			Figure fRight = map[yPosition][xPosition + 1];
+            Figure fUp = map[yPosition - 1][xPosition];
+            Figure fDown = map[yPosition + 1][xPosition];
+            Figure fleft = map[yPosition][xPosition - 1];
+            Figure fRight = map[yPosition][xPosition + 1];
 
-			switch (direction) {
-				case PacManLauncher.UP:
-					if (fUp.getClass().getName().compareTo("view.Wall") != 0) {
-						canMove = true;
-					}
-					break;
-				case PacManLauncher.DOWN:
-					if (fDown.getClass().getName().compareTo("view.Wall") != 0) {
-						canMove = true;
-					}
-					break;
-				case PacManLauncher.LEFT:
-					if (fleft.getClass().getName().compareTo("view.Wall") != 0) {
-						canMove = true;
-					}
-					break;
-				case PacManLauncher.RIGHT:
-					if (fRight.getClass().getName().compareTo("view.Wall") != 0) {
-						canMove = true;
-					}
-					break;
-			}
-		}
+            switch (direction) {
+                case PacManLauncher.UP:
+                    if (!(fUp instanceof Wall)) {
+                        canMove = true;
+                    }
+                    break;
+                case PacManLauncher.DOWN:
+                    if (!(fDown instanceof Wall)) {
+                        canMove = true;
+                    }
+                    break;
+                case PacManLauncher.LEFT:
+                    if (!(fleft instanceof Wall)) {
+                        canMove = true;
+                    }
+                    break;
+                case PacManLauncher.RIGHT:
+                    if (!(fRight instanceof Wall)) {
+                        canMove = true;
+                    }
+                    break;
+            }
+        }
 
-		return canMove;
-	}
+        return canMove;
+    }
 
 	@Override
 	public void move(int xMove, int yMove) {
@@ -235,13 +239,29 @@ public class Pacman extends Creature {
 		if (f instanceof Food) {
 			Food food = (Food) f;
 			if (food.getFood() != null) {
+				this.updateScoreFood();
+				this.checkIfNewLife();
+				food.setFood(null);
+				this.gameMap.pickFood();
+				map[i][j]=food;
+				food.draw();
 				
+				
+			
+				
+						
+						
 				/*
 				 * TODO Ici, il faut: - Changer le food en null (y a un setFood...) - Redessiner
 				 * le food (.draw()) - Et après, remettre à jour la map en updatant la bouffe
 				 * qu'il y avait dedans - Mettre à jour le score - Sachant qu'un food peut être
 				 * un powerup, y a un truc à gérer :)
 				 */
+			}
+			if (food.isPowerUp()) {
+				this.isEmpowered  =true;
+				food.setPowerUp(false);
+				
 			}
 		}
 	}

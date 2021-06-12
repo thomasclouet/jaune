@@ -2,6 +2,7 @@ package fr.imt.albi.pacman.model;
 
 import fr.imt.albi.pacman.main.PacManLauncher;
 import fr.imt.albi.pacman.utils.Figure;
+import fr.imt.albi.pacman.utils.Food;
 import fr.imt.albi.pacman.utils.GhostSkin;
 import fr.imt.albi.pacman.utils.Wall;
 
@@ -9,13 +10,19 @@ import java.util.ArrayList;
 
 public class Ghost extends Creature {
 
-    public static final int SPEED_GHOST = 10;
+    public int SPEED_GHOST= 10;
+    public static int SPEED_GHOST_AVG =10;
+ 
+    public static int SPEED_GHOST_MIN = 9;
+    public static int SPEED_GHOST_MAX = 11;
     public static final int GHOST_SCORE = 100;
     private final GhostSkin ghostSkin;
     private final String ghostColor;
     private String previousMove;
     private int counterUTurn;
     private int counterFear;
+    
+    
 
     public Ghost(int size, int x, int y, String color) {
         this.previousMove = PacManLauncher.UP;
@@ -27,16 +34,75 @@ public class Ghost extends Creature {
         this.ghostSkin = new GhostSkin(size, x, y, color);
     }
 
-    public void move() {
+    public void move(Pacman pacman) {
         if (this.counterFear == 0) {
             this.setNormalState();
         }
+        
+       
         if (this.counterFear % 2 == 1 || this.counterFear == 0) {
             if (this.counterFear > 0) {
                 this.counterFear--;
+                
+                
             }
             this.counterUTurn--;
-            if (this.counterUTurn == 0) {
+            int pacmanx = pacman.getX();
+            int pacmany = pacman.getY();
+           
+            
+            if (Math.abs(getX()-pacmanx)<100 && Math.abs(getY()-pacmany)<100 && pacman.getIsEmpowered() ==false) {
+            	//SPEED_GHOST=Ghost.SPEED_GHOST_MIN;
+            	if (pacman.getIsEmpowered() ==false) {
+	            	if (pacmanx<this.getX()) {
+	            		this.move(PacManLauncher.LEFT);
+	            	}
+	            	if (pacmany<this.getY()) {
+	           		 	this.move(PacManLauncher.UP);
+	            	}           
+	            	if (pacmanx>this.getX()) {
+	           		 	this.move(PacManLauncher.RIGHT);
+	            	}
+	            	if (pacmany>this.getY()) {
+	              		this.move(PacManLauncher.DOWN);
+	               	}
+            	}
+            	else {
+            		if (pacmanx<this.getX()) {
+	            		this.move(PacManLauncher.RIGHT);
+	            	}
+	            	if (pacmany<this.getY()) {
+	           		 	this.move(PacManLauncher.DOWN);
+	            	}           
+	            	if (pacmanx>this.getX()) {
+	           		 	this.move(PacManLauncher.LEFT);
+	            	}
+	            	if (pacmany>this.getY()) {
+	              		this.move(PacManLauncher.UP);
+	               	}
+            		
+            	}
+            }
+            if (Math.abs(getX()-pacmanx)<100 && Math.abs(getY()-pacmany)<100 && pacman.getIsEmpowered()==true) {
+            	//SPEED_GHOST=Ghost.SPEED_GHOST_MAX; 
+	            	if (pacmanx<this.getX()) {
+	            		this.move(PacManLauncher.RIGHT);
+	            	}
+	            	if (pacmany<this.getY()) {
+	           		 	this.move(PacManLauncher.DOWN);
+	            	}           
+	            	if (pacmanx>this.getX()) {
+	           		 	this.move(PacManLauncher.LEFT);
+	            	}
+	            	if (pacmany>this.getY()) {
+	              		this.move(PacManLauncher.UP);
+	               	}
+            	
+            }
+
+            
+            else if (this.counterUTurn <= 0) {
+            	//SPEED_GHOST=Ghost.SPEED_GHOST_AVG;
                 switch (this.previousMove) {
                     case PacManLauncher.UP:
                         this.move(PacManLauncher.DOWN);
@@ -119,7 +185,7 @@ public class Ghost extends Creature {
     }
 
     public int getSpeed() {
-        return Ghost.SPEED_GHOST;
+        return SPEED_GHOST;
     }
 
     public int getFearCounter() {

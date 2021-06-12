@@ -121,15 +121,27 @@ abstract class Creature {
 		// TODO Ici, il faut gérer l'évolution des coordonnées en fonction de la
 		// direction choisie :)
 		if (direction.equals(PacManLauncher.UP)){
+			if (yPosition==heightMap) {
+				this.setLocation(xPosition,0);
+			}
 			yMove=-speed;
 		}
 		else if (direction.equals(PacManLauncher.DOWN)){
+			if (yPosition==0) {
+				this.setLocation(xPosition,heightMap);
+			}
 			yMove=speed;
 		}
 		else if (direction.equals(PacManLauncher.LEFT)){
+			if (xPosition==0) {
+				this.setLocation(widthMap,yPosition);
+			}
 			xMove=-speed;
 		}
 		else if (direction.equals(PacManLauncher.RIGHT)){
+			if (xPosition==widthMap) {
+				this.setLocation(0,yPosition);
+			}
 			xMove=speed;
 		}
 

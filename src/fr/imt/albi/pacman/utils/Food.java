@@ -40,6 +40,9 @@ public class Food extends Figure {
 	public boolean isPowerUp() {
 		return this.isPowerUp;
 	}
+	public void setPowerUp(boolean b) {
+		this.isPowerUp = b;
+	}
 
 	@Override
 	public void draw() {
