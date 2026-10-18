@@ -43,15 +43,8 @@ public class Pacman extends Creature {
 	}
 
 	public void removeLife() {
-		this.currentLife=this.getCurrentLife()-1;
-		
-		
+		this.currentLife = this.getCurrentLife() - 1;
 	}
-		
-		// TODO Méthode qui gère le retrait d'une vie à Pacman
-
-
-	
 
 	public int getCurrentLife() {
 		return this.currentLife;
@@ -67,10 +60,10 @@ public class Pacman extends Creature {
 	}
 
 	private void checkIfNewLife() {
-		// TODO Là, faut vérifier si le Pacman a atteint la limite pour avoir une vie
-		// supplémentaire :)
-		if  (this.currentScore % LIFE_POINT_THRESHOLD == 0 && this.currentLife != 0) {
-			this.currentLife=this.getCurrentLife()+1;		
+		// Une vie de plus à chaque palier franchi (même si un fantôme fait sauter le palier)
+		while (this.currentScore >= this.nextLifeThreshold && this.currentLife > 0) {
+			this.currentLife = this.getCurrentLife() + 1;
+			this.nextLifeThreshold += Pacman.LIFE_POINT_THRESHOLD;
 		}
 	}
 
@@ -78,6 +71,7 @@ public class Pacman extends Creature {
 		// TODO Là, si Pacman bouffe un fantome, faut incrémenter le score comme il faut
 		// aussi.
 		this.currentScore=this.currentScore+Ghost.GHOST_SCORE;
+		this.checkIfNewLife();
 	}
 
 	public int getCurrentScore() {

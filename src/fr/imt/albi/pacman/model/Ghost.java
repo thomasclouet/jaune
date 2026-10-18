@@ -16,6 +16,8 @@ public class Ghost extends Creature {
     public static int SPEED_GHOST_MIN = 9;
     public static int SPEED_GHOST_MAX = 11;
     public static final int GHOST_SCORE = 100;
+    /* Distance (en pixels) à partir de laquelle le fantôme repère Pacman */
+    private static final int CHASE_DISTANCE = 100;
     private final GhostSkin ghostSkin;
     private final String ghostColor;
     private String previousMove;
@@ -47,61 +49,11 @@ public class Ghost extends Creature {
                 
             }
             this.counterUTurn--;
-            int pacmanx = pacman.getX();
-            int pacmany = pacman.getY();
-           
-            
-            if (Math.abs(getX()-pacmanx)<100 && Math.abs(getY()-pacmany)<100 && pacman.getIsEmpowered() ==false) {
-            	//SPEED_GHOST=Ghost.SPEED_GHOST_MIN;
-            	if (pacman.getIsEmpowered() ==false) {
-	            	if (pacmanx<this.getX()) {
-	            		this.move(PacManLauncher.LEFT);
-	            	}
-	            	if (pacmany<this.getY()) {
-	           		 	this.move(PacManLauncher.UP);
-	            	}           
-	            	if (pacmanx>this.getX()) {
-	           		 	this.move(PacManLauncher.RIGHT);
-	            	}
-	            	if (pacmany>this.getY()) {
-	              		this.move(PacManLauncher.DOWN);
-	               	}
-            	}
-            	else {
-            		if (pacmanx<this.getX()) {
-	            		this.move(PacManLauncher.RIGHT);
-	            	}
-	            	if (pacmany<this.getY()) {
-	           		 	this.move(PacManLauncher.DOWN);
-	            	}           
-	            	if (pacmanx>this.getX()) {
-	           		 	this.move(PacManLauncher.LEFT);
-	            	}
-	            	if (pacmany>this.getY()) {
-	              		this.move(PacManLauncher.UP);
-	               	}
-            		
-            	}
-            }
-            if (Math.abs(getX()-pacmanx)<100 && Math.abs(getY()-pacmany)<100 && pacman.getIsEmpowered()==true) {
-            	//SPEED_GHOST=Ghost.SPEED_GHOST_MAX; 
-	            	if (pacmanx<this.getX()) {
-	            		this.move(PacManLauncher.RIGHT);
-	            	}
-	            	if (pacmany<this.getY()) {
-	           		 	this.move(PacManLauncher.DOWN);
-	            	}           
-	            	if (pacmanx>this.getX()) {
-	           		 	this.move(PacManLauncher.LEFT);
-	            	}
-	            	if (pacmany>this.getY()) {
-	              		this.move(PacManLauncher.UP);
-	               	}
-            	
-            }
 
-            
-            else if (this.counterUTurn <= 0) {
+            if (this.isNear(pacman)) {
+                // Proche de Pacman : on le poursuit, ou on le fuit si on a peur
+                this.chaseOrFlee(pacman, this.counterFear > 0);
+            } else if (this.counterUTurn <= 0) {
             	//SPEED_GHOST=Ghost.SPEED_GHOST_AVG;
                 switch (this.previousMove) {
                     case PacManLauncher.UP:
@@ -123,6 +75,65 @@ public class Ghost extends Creature {
             }
         } else {
             this.counterFear--;
+        }
+    }
+
+    private boolean isNear(Pacman pacman) {
+        return Math.abs(this.getX() - pacman.getX()) < CHASE_DISTANCE
+                && Math.abs(this.getY() - pacman.getY()) < CHASE_DISTANCE;
+    }
+
+    /**
+     * Choisit une seule direction par tour, vers Pacman (ou à l'opposé s'il faut
+     * fuir), en évitant les murs quand on est sur une intersection.
+     */
+    private void chaseOrFlee(Pacman pacman, boolean flee) {
+        int dx = pacman.getX() - this.getX();
+        int dy = pacman.getY() - this.getY();
+        if (flee) {
+            dx = -dx;
+            dy = -dy;
+        }
+        String horizontal = dx < 0 ? PacManLauncher.LEFT : PacManLauncher.RIGHT;
+        String vertical = dy < 0 ? PacManLauncher.UP : PacManLauncher.DOWN;
+
+        String[] wanted;
+        if (Math.abs(dx) >= Math.abs(dy)) {
+            wanted = new String[] { horizontal, vertical };
+        } else {
+            wanted = new String[] { vertical, horizontal };
+        }
+
+        for (String direction : wanted) {
+            if (this.isFree(direction)) {
+                this.move(direction);
+                return;
+            }
+        }
+        this.checkCrossing(this.previousMove);
+    }
+
+    private boolean isFree(String direction) {
+        int sizeCase = this.gameMap.getSizeCase();
+        if (this.getX() % sizeCase != 0 || this.getY() % sizeCase != 0) {
+            // Entre deux cases, on ne peut que continuer ou faire demi-tour
+            return direction.equals(this.previousMove);
+        }
+        Figure[][] map = this.gameMap.getMap();
+        int[] position = this.getColumnAndRow();
+        int x = position[0];
+        int y = position[1];
+        switch (direction) {
+            case PacManLauncher.UP:
+                return !(map[y - 1][x] instanceof Wall);
+            case PacManLauncher.DOWN:
+                return !(map[y + 1][x] instanceof Wall);
+            case PacManLauncher.LEFT:
+                return !(map[y][x - 1] instanceof Wall);
+            case PacManLauncher.RIGHT:
+                return !(map[y][x + 1] instanceof Wall);
+            default:
+                return false;
         }
     }
 
@@ -214,41 +225,41 @@ public class Ghost extends Creature {
 
             switch (toward) {
                 case PacManLauncher.UP:
-                    if (fLeft.getClass().getName().compareTo("view.Wall") != 0 || fRight.getClass().getName().compareTo("view.Wall") != 0) {
+                    if (!(fLeft instanceof Wall) || !(fRight instanceof Wall)) {
                         caseAround.remove(fDown);
                         this.chooseMove(toward, caseAround, fUp, fDown, fLeft, fRight);
                         haveMoved = true;
-                    } else if (fUp.getClass().getName().compareTo("view.Wall") == 0) {
+                    } else if (fUp instanceof Wall) {
                         this.chooseMove(toward, caseAround, fUp, fDown, fLeft, fRight);
                         haveMoved = true;
                     }
                     break;
                 case PacManLauncher.DOWN:
-                    if (fLeft.getClass().getName().compareTo("view.Wall") != 0 || fRight.getClass().getName().compareTo("view.Wall") != 0) {
+                    if (!(fLeft instanceof Wall) || !(fRight instanceof Wall)) {
                         caseAround.remove(fUp);
                         this.chooseMove(toward, caseAround, fUp, fDown, fLeft, fRight);
                         haveMoved = true;
-                    } else if (fDown.getClass().getName().compareTo("view.Wall") == 0) {
+                    } else if (fDown instanceof Wall) {
                         this.chooseMove(toward, caseAround, fUp, fDown, fLeft, fRight);
                         haveMoved = true;
                     }
                     break;
                 case PacManLauncher.LEFT:
-                    if (fUp.getClass().getName().compareTo("view.Wall") != 0 || fDown.getClass().getName().compareTo("view.Wall") != 0) {
+                    if (!(fUp instanceof Wall) || !(fDown instanceof Wall)) {
                         caseAround.remove(fRight);
                         this.chooseMove(toward, caseAround, fUp, fDown, fLeft, fRight);
                         haveMoved = true;
-                    } else if (fLeft.getClass().getName().compareTo("view.Wall") == 0) {
+                    } else if (fLeft instanceof Wall) {
                         this.chooseMove(toward, caseAround, fUp, fDown, fLeft, fRight);
                         haveMoved = true;
                     }
                     break;
                 case PacManLauncher.RIGHT:
-                    if (fUp.getClass().getName().compareTo("view.Wall") != 0 || fDown.getClass().getName().compareTo("view.Wall") != 0) {
+                    if (!(fUp instanceof Wall) || !(fDown instanceof Wall)) {
                         caseAround.remove(fLeft);
                         this.chooseMove(toward, caseAround, fUp, fDown, fLeft, fRight);
                         haveMoved = true;
-                    } else if (fRight.getClass().getName().compareTo("view.Wall") == 0) {
+                    } else if (fRight instanceof Wall) {
                         this.chooseMove(toward, caseAround, fUp, fDown, fLeft, fRight);
                         haveMoved = true;
                     }
@@ -266,7 +277,7 @@ public class Ghost extends Creature {
         ArrayList<Figure> toGo = new ArrayList<Figure>();
 
         for (Figure f : listF) {
-            if (f.getClass().getName().compareTo("view.Wall") != 0) {
+            if (!(f instanceof Wall)) {
                 toGo.add(f);
             }
         }
