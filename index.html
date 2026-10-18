@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Les bourrelets d'Agnès</title>
+<meta property="og:type" content="article">
+<meta property="og:title" content="Les bourrelets d'Agnès">
+<meta property="og:description" content="Roulés feuilletés sans gluten au pesto rosso et à la mozzarella.">
+<meta property="og:image" content="https://thomasclouet.github.io/jaune/photo.jpg">
+<meta property="og:url" content="https://thomasclouet.github.io/jaune/">
+<link rel="canonical" href="https://thomasclouet.github.io/jaune/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Recipe", "name": "Les bourrelets d'Agnès", "image": ["https://thomasclouet.github.io/jaune/photo.jpg"], "author": {"@type": "Person", "name": "Agnès"}, "description": "Roulés feuilletés sans gluten au pesto rosso et à la mozzarella, avec leur dentelle de fromage grillé.", "prepTime": "PT15M", "cookTime": "PT20M", "totalTime": "PT50M", "recipeYield": "18 bourrelets", "recipeCategory": "Apéritif", "recipeCuisine": "Française", "keywords": "sans gluten, pesto rosso, mozzarella, feuilleté, apéritif", "suitableForDiet": "https://schema.org/GlutenFreeDiet", "recipeIngredient": ["1 pâte feuilletée sans gluten", "1 pot de pesto rosso", "1 mozzarella maxi"], "recipeInstructions": [{"@type": "HowToStep", "text": "Préchauffer le four à 200 °C. Couper la mozzarella en dés et l'égoutter."}, {"@type": "HowToStep", "text": "Dérouler la pâte, étaler le pesto rosso puis répartir la mozzarella."}, {"@type": "HowToStep", "text": "Rouler la pâte serré en partant du côté le plus long."}, {"@type": "HowToStep", "text": "Placer le boudin 15 minutes au congélateur."}, {"@type": "HowToStep", "text": "Couper des rondelles de 1,5 cm et les espacer de 3 cm sur la plaque."}, {"@type": "HowToStep", "text": "Cuire 18 à 22 minutes jusqu'à ce que le fromage autour soit brun et croustillant."}]}</script>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Roulés feuilletés sans gluten au pesto rosso et à la mozzarella, avec leur dentelle de fromage grillé.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shrikhand&family=Karla:ital,wght@0,400;0,600;0,700;1,400&family=DM+Mono:wght@400;500&display=swap">
+<style>
+/* Mise en page : une assiette blanche à cercles pointillés (celle de la photo) comme décor, la recette en deux colonnes ingrédients / étapes. */
+:root {\n  padding-block: env(safe-area-inset-top, 0px) env(safe-area-inset-bottom, 0px);
+  --bg: #f7f5f1;
+  --plate: #ffffff;
+  --fg: #2a211c;
+  --muted: #6e625a;
+  --line: #e4ddd4;
+  --tomato: #b8321c;
+  --crust: #d98a2b;
+  --crust-soft: #f6e3c6;
+  --font-display: "Shrikhand", "Cooper Black", Georgia, serif;
+  --font-body: "Karla", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "DM Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #17130f; --plate: #221c17; --fg: #f3ebe2; --muted: #b3a597; --line: #3a3029;
+    --tomato: #ec6a4f; --crust: #f0a849; --crust-soft: #3a2a17; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #17130f; --plate: #221c17; --fg: #f3ebe2; --muted: #b3a597; --line: #3a3029;
+  --tomato: #ec6a4f; --crust: #f0a849; --crust-soft: #3a2a17; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; }
+img { max-width: 100%; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+.wrap {
+  max-width: 68rem;
+  margin: 0 auto;
+  padding-block: 2.5rem 4rem;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+
+/* ---------- En-tête ---------- */
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: center;
+}
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: .78rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--tomato);
+  margin: 0 0 .75rem;
+}
+h1 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.6rem, 7vw, 4.8rem);
+  line-height: 1.02;
+  margin: 0 0 1.1rem;
+  text-wrap: balance;
+  color: var(--fg);
+}
+h1 em { font-style: normal; color: var(--tomato); }
+.lede { max-width: 34rem; margin: 0 0 1.5rem; color: var(--muted); font-size: 1.15rem; }
+
+.facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.facts li {
+  display: flex;
+  flex-direction: column;
+  padding: .55rem .9rem;
+  border: 1px solid var(--line);
+  border-radius: .6rem;
+  background: var(--plate);
+  min-width: 6.5rem;
+}
+.facts b { font-family: var(--font-mono); font-weight: 500; font-size: 1.05rem; font-variant-numeric: tabular-nums; }
+.facts span { font-size: .78rem; color: var(--muted); }
+.facts .gf { border-color: var(--crust); background: var(--crust-soft); }
+
+/* L'assiette : cercles pointillés comme sur la vraie */
+.plate {
+  position: relative;
+  aspect-ratio: 1;
+  max-width: 100%;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, transparent 58%, var(--line) 58.3%, transparent 58.8%),
+    repeating-radial-gradient(circle, transparent 0 9px, var(--line) 9px 10px),
+    var(--plate);
+  box-shadow: 0 1.2rem 3rem -1.5rem rgba(60, 30, 10, .45);
+  display: grid;
+  place-items: center;
+}
+.plate figure {
+  margin: 0;
+  width: 74%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 6px solid var(--plate);
+}
+.plate img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.plate .tag {
+  position: absolute;
+  right: 2%;
+  bottom: 9%;
+  transform: rotate(-8deg);
+  background: var(--tomato);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  padding: .45rem .9rem;
+  border-radius: 999px;
+}
+
+/* ---------- Corps ---------- */
+.recipe {
+  display: grid;
+  grid-template-columns: minmax(0, 20rem) minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  margin-top: clamp(2.5rem, 6vw, 4.5rem);
+  align-items: start;
+}
+h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.75rem;
+  line-height: 1.1;
+  margin: 0 0 1rem;
+}
+.card {
+  background: var(--plate);
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  padding: 1.4rem;
+  position: sticky;
+  top: calc(env(safe-area-inset-top, 0px) + 1rem);
+}
+
+.scaler {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  padding: .6rem .75rem;
+  border-radius: .6rem;
+  background: var(--crust-soft);
+  margin-bottom: 1.1rem;
+}
+.scaler label { font-size: .9rem; font-weight: 600; }
+.stepper { display: flex; align-items: center; gap: .4rem; }
+.stepper button {
+  width: 2rem; height: 2rem;
+  border-radius: 50%;
+  border: 1px solid var(--crust);
+  background: var(--plate);
+  color: var(--fg);
+  font: 600 1.1rem/1 var(--font-body);
+  cursor: pointer;
+}
+.stepper button:hover { background: var(--crust); color: var(--plate); }
+.stepper output { font-family: var(--font-mono); min-width: 1.5rem; text-align: center; font-variant-numeric: tabular-nums; }
+
+.ingredients { list-style: none; margin: 0; padding: 0; display: grid; gap: .25rem; }
+.ingredients label {
+  display: grid;
+  grid-template-columns: auto 4.2rem minmax(0, 1fr);
+  gap: .65rem;
+  align-items: baseline;
+  padding: .5rem 0;
+  border-bottom: 1px dashed var(--line);
+  cursor: pointer;
+}
+.ingredients li:last-child label { border-bottom: 0; }
+.ingredients input { accent-color: var(--tomato); transform: translateY(2px); }
+.qty { font-family: var(--font-mono); font-size: .92rem; color: var(--tomato); font-variant-numeric: tabular-nums; }
+.ingredients small { display: block; color: var(--muted); font-size: .82rem; }
+.ingredients input:checked ~ span { text-decoration: line-through; opacity: .5; }
+.yield { margin: 1rem 0 0; font-size: .9rem; color: var(--muted); }
+.yield b { font-family: var(--font-mono); color: var(--fg); font-weight: 500; }
+
+.steps { list-style: none; margin: 0; padding: 0; counter-reset: step; display: grid; gap: 1.4rem; }
+.steps li {
+  counter-increment: step;
+  display: grid;
+  grid-template-columns: 2.6rem minmax(0, 1fr);
+  gap: 1rem;
+}
+.steps li::before {
+  content: counter(step);
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--plate);
+  background: var(--tomato);
+  width: 2.6rem; height: 2.6rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+}
+.steps h3 { margin: .3rem 0 .25rem; font-size: 1.1rem; }
+.steps p { margin: 0; max-width: 38rem; }
+.time { font-family: var(--font-mono); font-size: .82rem; color: var(--muted); }
+
+.timer {
+  margin-top: .7rem;
+  display: inline-flex;
+  align-items: center;
+  gap: .8rem;
+  flex-wrap: wrap;
+}
+.timer button {
+  font: 600 .95rem var(--font-body);
+  padding: .55rem 1.1rem;
+  border-radius: 999px;
+  border: 0;
+  background: var(--fg);
+  color: var(--bg);
+  cursor: pointer;
+}
+.timer button:hover { background: var(--tomato); color: #fff; }
+.timer output { font-family: var(--font-mono); font-size: 1.4rem; font-variant-numeric: tabular-nums; }
+.timer .done { color: var(--tomato); font-weight: 700; }
+
+button:focus-visible, input:focus-visible { outline: 3px solid var(--crust); outline-offset: 2px; }
+
+.tips {
+  margin-top: 2.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 1rem;
+}
+.tip { border-top: 3px solid var(--crust); padding-top: .8rem; }
+.tip h3 { margin: 0 0 .3rem; font-size: 1rem; }
+.tip p { margin: 0; font-size: .95rem; color: var(--muted); }
+
+footer {
+  margin-top: 3.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: .9rem;
+}
+
+@media (max-width: 760px) {
+  .hero, .recipe { grid-template-columns: minmax(0, 1fr); }
+  .plate { width: min(26rem, 100%); margin: 0 auto; }
+  .card { position: static; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .plate figure { animation: spin-in .9s cubic-bezier(.2,.8,.2,1) both; }
+  @keyframes spin-in { from { transform: rotate(-25deg) scale(.94); } to { transform: none; } }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Apéritif · Sans gluten · 3 ingrédients</p>
+      <h1>Les bourrelets <em>d'Agnès</em></h1>
+      <p class="lede">Des roulés feuilletés au pesto rosso et à la mozzarella. Le fromage déborde à la cuisson et grille sur la plaque&nbsp;: ce sont ces petits bords croustillants qu'on se dispute, les fameux bourrelets.</p>
+      <ul class="facts">
+        <li><b>15 min</b><span>préparation</span></li>
+        <li><b>15 min</b><span>repos au froid</span></li>
+        <li><b>20 min</b><span>cuisson à 200&nbsp;°C</span></li>
+        <li class="gf"><b>0 g</b><span>de gluten</span></li>
+      </ul>
+    </div>
+    <div class="plate">
+      <figure><img src="photo.jpg" alt="Une assiette blanche avec six roulés feuilletés dorés, garnis de pesto rouge, entourés de fromage grillé."></figure>
+      <span class="tag">fait maison</span>
+    </div>
+  </header>
+
+  <main class="recipe">
+    <aside class="card" aria-labelledby="ing-title">
+      <h2 id="ing-title">Ingrédients</h2>
+      <div class="scaler">
+        <label for="rolls">Nombre de pâtes</label>
+        <div class="stepper">
+          <button type="button" id="less" aria-label="Une pâte de moins">−</button>
+          <output id="rolls" aria-live="polite">1</output>
+          <button type="button" id="more" aria-label="Une pâte de plus">+</button>
+        </div>
+      </div>
+      <ul class="ingredients">
+        <li><label><input type="checkbox" id="ing-pate"><span class="qty" data-n="1" data-unit="pâte|pâtes"></span><span>Pâte feuilletée sans gluten<small>prête à dérouler, environ 230&nbsp;g</small></span></label></li>
+        <li><label><input type="checkbox" id="ing-pesto"><span class="qty" data-n="1" data-unit="pot|pots"></span><span>Pesto rosso<small>environ 190&nbsp;g, vérifiez la mention sans gluten</small></span></label></li>
+        <li><label><input type="checkbox" id="ing-mozza"><span class="qty" data-n="1" data-unit="maxi|maxi"></span><span>Mozzarella maxi<small>environ 250&nbsp;g, bien égouttée</small></span></label></li>
+      </ul>
+      <p class="yield">Pour environ <b id="yield">18</b> bourrelets.</p>
+    </aside>
+
+    <section aria-labelledby="steps-title">
+      <h2 id="steps-title">Préparation</h2>
+      <ol class="steps">
+        <li>
+          <div>
+            <h3>Préchauffer et égoutter</h3>
+            <p>Préchauffez le four à 200&nbsp;°C, chaleur tournante. Sortez la mozzarella, coupez-la en petits dés et laissez-la égoutter sur du papier absorbant pendant que vous préparez le reste. Une mozzarella trop humide détrempe la pâte.</p>
+            <span class="time">5 min</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>Tartiner</h3>
+            <p>Déroulez la pâte sur son papier cuisson. Étalez le pesto rosso en couche régulière jusqu'à 1&nbsp;cm des bords, puis répartissez la mozzarella par-dessus.</p>
+            <span class="time">5 min</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>Rouler serré</h3>
+            <p>Roulez la pâte sur elle-même en partant du côté le plus long, en vous aidant du papier. La pâte sans gluten casse facilement&nbsp;: allez doucement et recollez les fissures du bout des doigts.</p>
+            <span class="time">5 min</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>Raffermir au froid</h3>
+            <p>Enveloppez le boudin dans son papier et placez-le 15&nbsp;minutes au congélateur. Il se tranchera net au lieu de s'écraser.</p>
+            <span class="time">15 min</span>
+            <div class="timer" data-seconds="900">
+              <button type="button" id="timer-cold">Lancer 15&nbsp;min</button>
+              <output aria-live="polite">15:00</output>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>Trancher</h3>
+            <p>Coupez des rondelles de 1,5&nbsp;cm avec un couteau bien aiguisé. Posez-les à plat sur la plaque, en les espaçant de 3&nbsp;cm&nbsp;: c'est là que le fromage va couler et former les bourrelets.</p>
+            <span class="time">3 min</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>Cuire jusqu'à la dentelle</h3>
+            <p>Enfournez 18 à 22&nbsp;minutes, jusqu'à ce que la pâte soit bien dorée et que le fromage autour soit brun et croustillant. Laissez tiédir 5&nbsp;minutes sur la plaque avant de décoller&nbsp;: les bords durcissent en refroidissant.</p>
+            <span class="time">20 min</span>
+            <div class="timer" data-seconds="1200">
+              <button type="button" id="timer-bake">Lancer 20&nbsp;min</button>
+              <output aria-live="polite">20:00</output>
+            </div>
+          </div>
+        </li>
+      </ol>
+
+      <div class="tips">
+        <div class="tip">
+          <h3>Pour plus de bourrelets</h3>
+          <p>Gardez une poignée de mozzarella et parsemez-la autour des rondelles juste avant d'enfourner.</p>
+        </div>
+        <div class="tip">
+          <h3>À préparer la veille</h3>
+          <p>Le boudin roulé se garde 24&nbsp;h au réfrigérateur, bien filmé. Tranchez et enfournez au dernier moment.</p>
+        </div>
+        <div class="tip">
+          <h3>Variante</h3>
+          <p>Remplacez le pesto rosso par un pesto vert, ou ajoutez quelques tomates séchées hachées.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>Recette d'Agnès. À servir tiède, avec un verre de rouge.</footer>
+</div>
+
+<script>
+(function () {
+  var rolls = 1;
+  var out = document.getElementById('rolls');
+  var yieldEl = document.getElementById('yield');
+  var qtys = document.querySelectorAll('.qty');
+
+  function render() {
+    out.textContent = rolls;
+    yieldEl.textContent = rolls * 18;
+    qtys.forEach(function (q) {
+      var n = Number(q.dataset.n) * rolls;
+      var units = q.dataset.unit.split('|');
+      q.textContent = n + ' ' + (n > 1 ? units[1] : units[0]);
+    });
+  }
+  document.getElementById('less').addEventListener('click', function () { if (rolls > 1) { rolls--; render(); } });
+  document.getElementById('more').addEventListener('click', function () { if (rolls < 10) { rolls++; render(); } });
+  render();
+
+  function fmt(s) {
+    var m = Math.floor(s / 60), r = s % 60;
+    return String(m).padStart(2, '0') + ':' + String(r).padStart(2, '0');
+  }
+
+  document.querySelectorAll('.timer').forEach(function (t) {
+    var total = Number(t.dataset.seconds);
+    var btn = t.querySelector('button');
+    var label = btn.textContent;
+    var o = t.querySelector('output');
+    var id = null, end = 0;
+
+    function stop(reset) {
+      clearInterval(id); id = null;
+      btn.textContent = label;
+      if (reset) { o.textContent = fmt(total); o.classList.remove('done'); }
+    }
+    btn.addEventListener('click', function () {
+      if (id) { stop(true); return; }
+      end = Date.now() + total * 1000;
+      o.classList.remove('done');
+      btn.textContent = 'Arrêter';
+      id = setInterval(function () {
+        var left = Math.max(0, Math.round((end - Date.now()) / 1000));
+        o.textContent = fmt(left);
+        if (left === 0) { stop(false); o.textContent = "C'est prêt"; o.classList.add('done'); }
+      }, 250);
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://thomasclouet.github.io/jaune/sitemap.xml
